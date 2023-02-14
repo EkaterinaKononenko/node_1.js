@@ -1,5 +1,6 @@
 const { program } = require("commander");
 const contacts = require("./contacts");
+
 program
   .option("-a, --action <type>", "choose action")
   .option("-i, --id <type>", "user id")
@@ -24,9 +25,9 @@ async function invokeAction({ action, id, name, email, phone }) {
       console.table(getContact);
       break;
 
-    case "add":
-      const newContact = await contacts.addContact({ name, email, phone });
-      console.log(newContact);
+     case "add":
+      const contactsNew = await contacts.addContact(name, email, phone);
+      console.table(contactsNew);
       break;
 
     case "remove":
