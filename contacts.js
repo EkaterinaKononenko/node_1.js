@@ -42,20 +42,18 @@ async function removeContact(contactId) {
 }
 
 
-async function addContact( name, email, phone) {
-  try {
-    const data = await fs.readFile(contactsPath);
-    const contacts = JSON.parse(data);
-    const contactsNew = { id: Date.now(), name, email, phone };
-    const contactsList = JSON.stringify([contactsNew, ...contacts], null, "\t");
-    await fs.writeFile(contactsPath, JSON.stringify(contactsList),(err) => {
-        if (err) console.error(err);
-      });
-    return contactsNew;
-  } catch (error) {
-    console.log(error);
-  }
-}
+ async function addContact(name, email, phone) {
+   try {
+     const data = await fs.readFile(contactsPath);
+     const contacts = JSON.parse(data);
+     const contactsNew = { id: Date.now(), name, email, phone };
+     contacts.push(contactsNew);
+     await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+     return contactsNew;
+   } catch (error) {
+     console.log(error);
+   }
+ } 
 
 module.exports = {
   listContacts,
